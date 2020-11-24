@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
+// import { useAuth0 } from "@auth0/auth0-react";
 // import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
-import LoginButton from "./auth/LoginButton";
-import LogoutButton from "./auth/LogoutButton";
-import logo from './logo.svg';
-import './App.css';
+import Footer from "./Footer";
+import "./App.css";
 
 // const createApolloClient = (authToken) => {
 //   return new ApolloClient({
@@ -18,10 +17,6 @@ import './App.css';
 // };
 
 // const App = ({ idToken }) => {
-//   const { loading, logout } = useAuth0();
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
 //   const client = createApolloClient(idToken);
 //   return (
 //     <ApolloProvider client={client}>
@@ -45,27 +40,12 @@ import './App.css';
 //   );
 // };
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <LoginButton />
-      <LogoutButton />
-    </div>
+    <>
+      <Footer />
+    </>
   );
-}
+};
 
 export default App;
