@@ -5,6 +5,7 @@ import LoginButton from "./auth/LoginButton";
 
 const Footer = () => {
   const { isLoading, isAuthenticated } = useAuth0();
+
   return (
     <div>
       {isLoading && <div>Loading...</div>}

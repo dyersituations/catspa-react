@@ -1,50 +1,45 @@
-import React from "react";
-// import { useAuth0 } from "@auth0/auth0-react";
-// import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
+import React, { FunctionComponent } from "react";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  HttpLink,
+} from "@apollo/client";
+import { useAuth0 } from "@auth0/auth0-react";
 import Footer from "./Footer";
 import "./App.css";
 
-// const createApolloClient = (authToken) => {
-//   return new ApolloClient({
-//     link: new HttpLink({
-//       uri: 'https://hasura.io/learn/graphql',
-//       headers: {
-//         Authorization: `Bearer ${authToken}`
-//       }
-//     }),
-//     cache: new InMemoryCache(),
-//   });
-// };
+interface AppProps {
+  accessToken: string;
+}
 
-// const App = ({ idToken }) => {
-//   const client = createApolloClient(idToken);
-//   return (
-//     <ApolloProvider client={client}>
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <p>
-//             Edit <code>src/App.tsx</code> and save to reload.
-//         </p>
-//           <a
-//             className="App-link"
-//             href="https://reactjs.org"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//           >
-//             Learn React
-//         </a>
-//         </header>
-//       </div>
-//     </ApolloProvider>
-//   );
-// };
+const createApolloClient = (isLoading: boolean, accessToken: string) => {
+  const headers: { Authorization?: string } = {};
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
 
-const App = () => {
+  const getClientLink = () => {
+    return new HttpLink({
+      uri: "http://localhost:8080/v1/graphql",
+      headers,
+    });
+  };
+
+  return new ApolloClient({
+    link: accessToken || !isLoading ? getClientLink() : undefined,
+    cache: new InMemoryCache(),
+  });
+};
+
+const App: FunctionComponent<AppProps> = ({ accessToken }) => {
+  const { isLoading } = useAuth0();
+  const client = createApolloClient(isLoading, accessToken);
+
   return (
-    <>
+    <ApolloProvider client={client}>
       <Footer />
-    </>
+    </ApolloProvider>
   );
 };
 
