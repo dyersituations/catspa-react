@@ -6,6 +6,7 @@ import {
   HttpLink,
 } from "@apollo/client";
 import { useAuth0 } from "@auth0/auth0-react";
+import Loader from "./Loader";
 import Footer from "./Footer";
 import "./App.css";
 
@@ -38,7 +39,8 @@ const App: FunctionComponent<AppProps> = ({ accessToken }) => {
 
   return (
     <ApolloProvider client={client}>
-      <Footer />
+      {isLoading && <Loader />}
+      {!isLoading && <Footer />}
     </ApolloProvider>
   );
 };
