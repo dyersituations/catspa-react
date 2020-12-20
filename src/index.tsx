@@ -1,12 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { applyMiddleware, createStore } from "redux";
+import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga";
 import AuthWrapper from "./auth/AuthWrapper";
 import reportWebVitals from "./reportWebVitals";
-import "./index.css";
+import rootReducer from "./redux/rootReducer";
+import rootSaga from "./redux/rootSaga";
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthWrapper />
+    <Provider store={store}>
+      <AuthWrapper />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

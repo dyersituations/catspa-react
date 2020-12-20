@@ -1,6 +1,6 @@
 import React from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
-import AppWithAuth from "./AppWithAuth";
+import App from "../App";
 
 const AuthWrapper = () => {
   return (
@@ -10,7 +10,7 @@ const AuthWrapper = () => {
       redirectUri={window.location.origin}
       audience={process.env.REACT_APP_AUTH_PROVIDER_AUDIENCE}
     >
-      <AppWithAuth />
+      <App />
     </Auth0Provider>
   );
 };
