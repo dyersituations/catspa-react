@@ -1,9 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { applyMiddleware, createStore } from "redux";
+import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
-import AuthWrapper from "./auth/AuthWrapper";
+import { Auth0Provider } from "@auth0/auth0-react";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import rootReducer from "./redux/rootReducer";
 import rootSaga from "./redux/rootSaga";
@@ -17,7 +19,16 @@ sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AuthWrapper />
+      <BrowserRouter>
+        <Auth0Provider
+          domain={process.env.REACT_APP_AUTH_PROVIDER_DOMAIN || ""}
+          clientId={process.env.REACT_APP_AUTH_PROVIDER_CLIENT_ID || ""}
+          redirectUri={window.location.origin}
+          audience={process.env.REACT_APP_AUTH_PROVIDER_AUDIENCE}
+        >
+          <App />
+        </Auth0Provider>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

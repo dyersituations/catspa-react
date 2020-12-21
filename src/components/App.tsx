@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { createGlobalStyle } from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { initApolloClient } from "./graphql/apolloClient";
+import { useRoutes } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import { initApolloClient } from "../graphql/apolloClient";
 import Loader from "./Loader";
 import Footer from "./Footer";
-import { fetchSettings } from "./redux/settings/actions";
-import { RootState } from "./redux/types";
-import { Setting } from "./redux/settings/types";
+import { fetchSettings } from "../redux/settings/actions";
+import { RootState } from "../redux/types";
+import { Setting } from "../redux/settings/types";
+import routes from "../routes";
 
 const StyledGlobal = createGlobalStyle`
   html {
@@ -27,6 +29,7 @@ const App = () => {
     (state: RootState) => state.settings.data
   );
   const loading = isLoading || !settings;
+  const routing = useRoutes(routes(isAuthenticated));
 
   useEffect(() => {
     const getToken = async () => {
@@ -49,7 +52,12 @@ const App = () => {
     <>
       <StyledGlobal />
       {loading && <Loader />}
-      {!loading && <Footer />}
+      {!loading && (
+        <>
+          {routing}
+          <Footer />
+        </>
+      )}
     </>
   );
 };
