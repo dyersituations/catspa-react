@@ -6,8 +6,8 @@ import { fetchedSettings } from "./actions";
 import { FETCH_SETTINGS } from "./constants";
 
 const GET_SETTINGS = gql`
-  query getSettings {
-    settings {
+  query getSettings($id: uuid) {
+    settings(where: { app_id: { _eq: $id } }) {
       key
       value
     }
@@ -16,7 +16,9 @@ const GET_SETTINGS = gql`
 
 function* fetchSettingsAsync(action: Action) {
   try {
-    const { data } = yield call(runQuery, GET_SETTINGS);
+    const { data } = yield call(runQuery, GET_SETTINGS, {
+      id: process.env.REACT_APP_APP_ID,
+    });
     yield put(fetchedSettings(data.settings));
   } catch (error) {
     yield put({ type: "FETCH_FAILED", error });

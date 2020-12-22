@@ -4,6 +4,7 @@ import {
   HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
+  OperationVariables,
 } from "@apollo/client";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
@@ -26,6 +27,12 @@ export const initApolloClient = (token: string | undefined) => {
   });
 };
 
-export const runQuery = (query: DocumentNode) => {
-  return apolloClient?.query({ query: query });
+export const runQuery = (
+  query: DocumentNode,
+  variables: OperationVariables
+) => {
+  return apolloClient?.query({
+    query,
+    variables,
+  });
 };
