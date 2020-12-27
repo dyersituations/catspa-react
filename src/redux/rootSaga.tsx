@@ -1,6 +1,7 @@
 import { all, fork } from "redux-saga/effects";
-import settingsSaga from "./settings/settingsSaga";
+import fetchSettingsSaga from "./settings/fetchSettingsSaga";
+import saveSettingsSaga from "./settings/saveSettingsSaga";
 
 export default function* rootSaga() {
-  yield all([fork(settingsSaga)]);
+  yield all([fork(fetchSettingsSaga), fork(saveSettingsSaga)]);
 }

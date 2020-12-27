@@ -20,7 +20,7 @@ const getClientLink = (token: string | undefined) => {
   });
 };
 
-export const initApolloClient = (token: string | undefined) => {
+export const initApolloClient = (token?: string) => {
   apolloClient = new ApolloClient({
     link: getClientLink(token),
     cache: new InMemoryCache(),
@@ -33,6 +33,16 @@ export const runQuery = (
 ) => {
   return apolloClient?.query({
     query,
+    variables,
+  });
+};
+
+export const runMutation = (
+  mutation: DocumentNode,
+  variables: OperationVariables
+) => {
+  return apolloClient?.mutate({
+    mutation,
     variables,
   });
 };

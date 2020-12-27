@@ -32,37 +32,39 @@ const StyledGlobal = createGlobalStyle<SettingsGlobalProps>`
 `;
 
 const App = () => {
-  const { isLoading, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
-  const settings: Setting[] | undefined = useSelector(
+  const isLoading: boolean = useSelector(
+    (state: RootState) => state.global.isLoading
+  );
+  const settings: Setting[] = useSelector(
     (state: RootState) => state.settings.data
   );
-  const loading = isLoading || !settings;
   const routing = useRoutes(routes(isAuthenticated));
 
   useEffect(() => {
+    initApolloClient();
+    dispatch(fetchSettings());
+  }, [dispatch]);
+
+  useEffect(() => {
     const getToken = async () => {
-      let token;
       if (isAuthenticated) {
-        token = await getAccessTokenSilently();
+        const token = await getAccessTokenSilently();
+        initApolloClient(token);
       }
-      initApolloClient(token);
     };
     getToken();
   }, [isAuthenticated, getAccessTokenSilently]);
 
-  useEffect(() => {
-    if (!isLoading) {
-      dispatch(fetchSettings());
-    }
-  }, [isLoading, dispatch]);
-
   return (
     <>
       <StyledGlobal settingsCss={createSettingsCss(settings)} />
-      {loading && <Loader />}
-      {!loading && (
+      {!settings ? (
+        <Loader />
+      ) : (
         <>
+          {isLoading && <Loader />}
           {routing}
           <Footer />
         </>

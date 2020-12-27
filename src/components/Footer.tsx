@@ -5,11 +5,13 @@ import LoginButton from "./LoginButton";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isLoading, isAuthenticated } = useAuth0();
 
   return (
     <>
-      {isAuthenticated ? (
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : isAuthenticated ? (
         <>
           <NavLink to="/admin">Admin</NavLink>
           <LogoutButton />

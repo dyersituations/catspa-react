@@ -1,12 +1,11 @@
 import { gql } from "@apollo/client";
-import { Action } from "redux";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { runQuery } from "../../graphql/apolloClient";
 import { fetchedSettings } from "./actions";
 import { FETCH_SETTINGS } from "./constants";
 
-const GET_SETTINGS = gql`
-  query getSettings($id: uuid) {
+const FETCH_SETTINGS_QUERY = gql`
+  query fetch_settings($id: uuid) {
     settings(where: { app_id: { _eq: $id } }) {
       key
       value
@@ -14,9 +13,9 @@ const GET_SETTINGS = gql`
   }
 `;
 
-function* fetchSettingsAsync(action: Action) {
+function* fetchSettingsAsync() {
   try {
-    const { data } = yield call(runQuery, GET_SETTINGS, {
+    const { data } = yield call(runQuery, FETCH_SETTINGS_QUERY, {
       id: process.env.REACT_APP_APP_ID,
     });
     yield put(fetchedSettings(data.settings));
@@ -25,6 +24,6 @@ function* fetchSettingsAsync(action: Action) {
   }
 }
 
-export default function* settingsSaga() {
+export default function* fetchSettingsSaga() {
   yield takeEvery(FETCH_SETTINGS, fetchSettingsAsync);
 }
