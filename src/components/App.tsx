@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRoutes } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { initApolloClient } from "../graphql/apolloClient";
 import Loader from "./Loader";
 import Footer from "./Footer";
@@ -11,6 +11,7 @@ import { RootState } from "../redux/types";
 import routes from "../routes";
 import { SettingsValues } from "../settings/types";
 import Settings from "../settings/Settings";
+import Header from "./Header";
 
 interface SettingsGlobalProps {
   settingsCss: string;
@@ -26,6 +27,16 @@ const StyledGlobal = createGlobalStyle<SettingsGlobalProps>`
     height: 100%;
     ${(props) => props.settingsCss}
   }
+
+  #root {
+    height: 100%;
+    overflow: hidden;
+  }
+`;
+
+const StyledContent = styled.div`
+  height: calc(100% - 50px);
+  overflow-y: auto;
 `;
 
 const App = () => {
@@ -61,9 +72,12 @@ const App = () => {
         <Loader />
       ) : (
         <>
-          {isLoading && <Loader background={settings.cssBackground} />}
-          {routing}
-          <Footer />
+          <Header />
+          <StyledContent>
+            {isLoading && <Loader background={settings.cssBackground} />}
+            {routing}
+            <Footer />
+          </StyledContent>
         </>
       )}
     </>
