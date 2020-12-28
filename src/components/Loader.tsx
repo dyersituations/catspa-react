@@ -1,14 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 
+interface LoaderProps {
+  background: string;
+}
+
+const StyledLoaderModel = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+`;
+
 const StyledLoaderWrapper = styled.div`
   position: absolute;
   width: 100%;
   height: calc(100% - 300px);
-  background: rgba(255, 255, 255, 0.6);
   text-align: center;
   padding: 150px 0;
   animation: popin 1s;
+  z-index: -1;
 
   @keyframes popin {
     0% {
@@ -46,20 +57,6 @@ const StyledLoader = styled.div`
     content: "";
   }
 
-  &:after {
-    background: #fff;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-    content: "";
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
-
   @keyframes load3 {
     0% {
       transform: rotate(0deg);
@@ -70,11 +67,30 @@ const StyledLoader = styled.div`
   }
 `;
 
-const Loader = () => {
+const StyledLoaderMiddle = styled.div<LoaderProps>`
+  background: ${(props) => props.background};
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: "";
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+`;
+
+const Loader = ({ background = "white" }) => {
   return (
-    <StyledLoaderWrapper>
-      <StyledLoader />
-    </StyledLoaderWrapper>
+    <>
+      <StyledLoaderModel />
+      <StyledLoaderWrapper>
+        <StyledLoader>
+          <StyledLoaderMiddle background={background} />
+        </StyledLoader>
+      </StyledLoaderWrapper>
+    </>
   );
 };
 

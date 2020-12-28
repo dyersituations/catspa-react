@@ -2,21 +2,18 @@ import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRoutes } from "react-router-dom";
-import {
-  createGlobalStyle,
-  FlattenSimpleInterpolation,
-} from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { initApolloClient } from "../graphql/apolloClient";
 import Loader from "./Loader";
 import Footer from "./Footer";
 import { fetchSettings } from "../redux/settings/actions";
 import { RootState } from "../redux/types";
-import { Setting } from "../redux/settings/types";
 import routes from "../routes";
-import { createSettingsCss } from "../util";
+import { SettingsValues } from "../settings/types";
+import Settings from "../settings/Settings";
 
 interface SettingsGlobalProps {
-  settingsCss: FlattenSimpleInterpolation | undefined;
+  settingsCss: string;
 }
 
 const StyledGlobal = createGlobalStyle<SettingsGlobalProps>`
@@ -37,8 +34,8 @@ const App = () => {
   const isLoading: boolean = useSelector(
     (state: RootState) => state.global.isLoading
   );
-  const settings: Setting[] = useSelector(
-    (state: RootState) => state.settings.data
+  const settings: SettingsValues = Settings(
+    useSelector((state: RootState) => state.settings.data)
   );
   const routing = useRoutes(routes(isAuthenticated));
 
@@ -59,12 +56,12 @@ const App = () => {
 
   return (
     <>
-      <StyledGlobal settingsCss={createSettingsCss(settings)} />
+      <StyledGlobal settingsCss={settings.getSettingsCss()} />
       {!settings ? (
         <Loader />
       ) : (
         <>
-          {isLoading && <Loader />}
+          {isLoading && <Loader background={settings.cssBackground} />}
           {routing}
           <Footer />
         </>
