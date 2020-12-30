@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 interface LoaderProps {
-  background: string;
+  background?: string;
 }
 
 const StyledLoaderModel = styled.div`
@@ -81,7 +81,7 @@ const StyledLoaderMiddle = styled.div<LoaderProps>`
   right: 0;
 `;
 
-const Loader = ({ background = "white" }) => {
+const Loader = ({ background = "white" }: LoaderProps) => {
   return (
     <>
       <StyledLoaderModel />

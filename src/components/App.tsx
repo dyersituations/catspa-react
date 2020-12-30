@@ -9,7 +9,7 @@ import Footer from "./Footer";
 import { fetchSettings } from "../redux/settings/actions";
 import { RootState } from "../redux/types";
 import routes from "../routes";
-import { SettingsValues } from "../settings/types";
+import { SettingsManager } from "../settings/types";
 import Settings from "../settings/Settings";
 import Header from "./Header";
 
@@ -34,9 +34,18 @@ const StyledGlobal = createGlobalStyle<SettingsGlobalProps>`
   }
 `;
 
-const StyledContent = styled.div`
+const StyledContentWrapper = styled.div`
   height: calc(100% - 50px);
   overflow-y: auto;
+`;
+
+const StyledContent = styled.div`
+  margin: 0 auto;
+  width: 1000px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const App = () => {
@@ -45,7 +54,7 @@ const App = () => {
   const isLoading: boolean = useSelector(
     (state: RootState) => state.global.isLoading
   );
-  const settings: SettingsValues = Settings(
+  const settingsManager: SettingsManager = Settings(
     useSelector((state: RootState) => state.settings.data)
   );
   const routing = useRoutes(routes(isAuthenticated));
@@ -67,17 +76,21 @@ const App = () => {
 
   return (
     <>
-      <StyledGlobal settingsCss={settings.getSettingsCss()} />
-      {!settings ? (
+      <StyledGlobal settingsCss={settingsManager.getSettingsCss()} />
+      {!settingsManager ? (
         <Loader />
       ) : (
         <>
           <Header />
-          <StyledContent>
-            {isLoading && <Loader background={settings.cssBackground} />}
-            {routing}
-            <Footer />
-          </StyledContent>
+          <StyledContentWrapper>
+            <StyledContent>
+              {isLoading && (
+                <Loader background={settingsManager.cssBackground.value} />
+              )}
+              {routing}
+              <Footer />
+            </StyledContent>
+          </StyledContentWrapper>
         </>
       )}
     </>

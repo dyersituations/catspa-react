@@ -1,32 +1,43 @@
 import { Setting } from "../redux/settings/types";
-import { SettingsValues } from "./types";
+import { SettingsManager, SettingsValueType } from "./types";
 
 const CSS_BACKGROUND = "css_background";
 const CSS_COLOR = "css_color";
 
-class Settings implements SettingsValues {
+class Settings implements SettingsManager {
   private static instance: Settings;
-  public cssBackground: string = "white";
-  public cssColor: string = "black";
+  private settings: Setting[] = [];
+
+  public get cssBackground() {
+    return {
+      key: CSS_BACKGROUND,
+      value: this.getSetting(CSS_BACKGROUND, "white"),
+      type: SettingsValueType.Text,
+    };
+  }
+
+  public get cssColor() {
+    return {
+      key: CSS_COLOR,
+      value: this.getSetting(CSS_COLOR, "black"),
+      type: SettingsValueType.Text,
+    };
+  }
+
+  private getSetting(key: string, defaultValue: string) {
+    return this.settings.find((s) => s.key === key)?.value || defaultValue;
+  }
 
   public static Instance(settings: Setting[]) {
     const instance = Settings.instance || (Settings.instance = new Settings());
-    instance.setValues(settings);
+    instance.settings = settings;
     return instance;
-  }
-
-  private setValues(settings: Setting[]) {
-    this.cssBackground =
-      settings.find((s) => s.key === CSS_BACKGROUND)?.value ||
-      this.cssBackground;
-    this.cssColor =
-      settings.find((s) => s.key === CSS_COLOR)?.value || this.cssColor;
   }
 
   public getSettingsCss() {
     const styles = `
-      background: ${this.cssBackground};
-      color: ${this.cssColor};
+      background: ${this.cssBackground.value};
+      color: ${this.cssColor.value};
     `;
     return styles;
   }
