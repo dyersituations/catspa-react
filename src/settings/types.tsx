@@ -1,4 +1,5 @@
 export interface SettingsManager {
+  isLoading: boolean;
   cssBackground: SettingsValue;
   cssColor: SettingsValue;
   getSettingsCss: () => string;

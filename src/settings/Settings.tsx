@@ -7,6 +7,7 @@ const CSS_COLOR = "css_color";
 class Settings implements SettingsManager {
   private static instance: Settings;
   private settings: Setting[] = [];
+  public isLoading = true;
 
   public get cssBackground() {
     return {
@@ -30,7 +31,10 @@ class Settings implements SettingsManager {
 
   public static Instance(settings: Setting[]) {
     const instance = Settings.instance || (Settings.instance = new Settings());
-    instance.settings = settings;
+    if (settings.length) {
+      instance.settings = settings;
+      instance.isLoading = false;
+    }
     return instance;
   }
 

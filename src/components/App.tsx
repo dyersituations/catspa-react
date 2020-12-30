@@ -77,7 +77,7 @@ const App = () => {
   return (
     <>
       <StyledGlobal settingsCss={settingsManager.getSettingsCss()} />
-      {!settingsManager ? (
+      {settingsManager.isLoading ? (
         <Loader />
       ) : (
         <>
