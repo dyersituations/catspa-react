@@ -1,8 +1,10 @@
 ## TODO
+
 - Review npm packages, move some to dev
 - Review prod Dockerfile, compare to dev
 
 ## Auth0 Setup
+
 - Tenant Settings
   - **Default Directory:** Username-Password-Authentication
 - Database Connection
@@ -12,7 +14,7 @@
   - **Allowed Callback URLs:** http://localhost:3000
   - **Allowed Logout URLs:** http://localhost:3000
   - **Allowed Web Origins:** http://localhost:3000
-  - **Advanced Settings > Grant Types:** Password *(only needed for Postman request)*
+  - **Advanced Settings > Grant Types:** Password _(only needed for Postman request)_
 - Custom API
   - **Identifier:** hasura
 - Rule
@@ -33,3 +35,9 @@
     ```
 - User
   - **Connection:** Username-Password-Authentication
+
+## E2E
+
+- Cypress
+  - **Headless:** `docker-compose -f docker-compose.yml -f docker-compose.override.yml -f e2e/docker-compose.e2e.yml up --abort-on-container-exit cypress`
+  - **Test Runner:** `docker-compose -f docker-compose.yml -f docker-compose.override.yml -f e2e/docker-compose.e2e.yml -f e2e/docker-compose.cypress-open.yml up --abort-on-container-exit cypress`
