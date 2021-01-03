@@ -85,7 +85,7 @@ const Loader = ({ background = "white" }: LoaderProps) => {
   return (
     <>
       <StyledLoaderModel />
-      <StyledLoaderWrapper>
+      <StyledLoaderWrapper id="loader">
         <StyledLoader>
           <StyledLoaderMiddle background={background} />
         </StyledLoader>

@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Cypress
 /e2e/cypress/videos
+/e2e/cypress.env.json

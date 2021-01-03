@@ -3,7 +3,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRoutes } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
-import { initApolloClient } from "../graphql/apolloClient";
+import {
+  initApolloClient,
+  isApolloClientAuthenticated,
+} from "../graphql/apolloClient";
 import Loader from "./Loader";
 import Footer from "./Footer";
 import { fetchSettings } from "../redux/settings/actions";
@@ -57,7 +60,9 @@ const App = () => {
   const settingsManager: SettingsManager = Settings(
     useSelector((state: RootState) => state.settings.data)
   );
-  const routing = useRoutes(routes(isAuthenticated));
+  const routing = useRoutes(
+    routes(isAuthenticated || isApolloClientAuthenticated())
+  );
 
   useEffect(() => {
     initApolloClient();

@@ -9,9 +9,12 @@ import {
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
+let storedToken: string | undefined;
+
 const getClientLink = (token: string | undefined) => {
   const headers: { Authorization?: string } = {};
   if (token) {
+    storedToken = token;
     headers.Authorization = `Bearer ${token}`;
   }
   return new HttpLink({
@@ -26,6 +29,8 @@ export const initApolloClient = (token?: string) => {
     cache: new InMemoryCache(),
   });
 };
+
+export const isApolloClientAuthenticated = () => !!storedToken;
 
 export const runQuery = (
   query: DocumentNode,

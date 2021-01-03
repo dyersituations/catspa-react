@@ -1,1 +1,7 @@
-{}
+{
+  "env": {
+    "auth0Domain": "dyersituations.us.auth0.com",
+    "auth0ClientId": "olQbSDoYvniA5XQ663HGBGOCT1erGOW4",
+    "auth0Username": "dyersituations@gmail.com"
+  }
+}

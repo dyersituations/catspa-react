@@ -31,12 +31,14 @@ const Admin = () => {
   return (
     <>
       <div>Admin</div>
-      <Textbox
-        valueKey={settingsManager.cssBackground.key}
-        value={settingsManager.cssBackground.value}
-        onChange={onChange}
-      />
-      <button onClick={onSave}>Save</button>
+      <form id="adminForm">
+        <Textbox
+          valueKey={settingsManager.cssBackground.key}
+          value={settingsManager.cssBackground.value}
+          onChange={onChange}
+        />
+        <button onClick={onSave}>Save</button>
+      </form>
     </>
   );
 };

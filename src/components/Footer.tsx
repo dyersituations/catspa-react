@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
+import { isApolloClientAuthenticated } from "../graphql/apolloClient";
 
 const StyledFooter = styled.div`
   height: 50px;
@@ -16,9 +17,11 @@ const Footer = () => {
     <StyledFooter>
       {isLoading ? (
         <div>Loading...</div>
-      ) : isAuthenticated ? (
+      ) : isAuthenticated || isApolloClientAuthenticated() ? (
         <>
-          <NavLink to="/admin">Admin</NavLink>
+          <NavLink id="adminLink" to="/admin">
+            Admin
+          </NavLink>
           <LogoutButton />
         </>
       ) : (
