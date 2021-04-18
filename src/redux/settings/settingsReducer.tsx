@@ -3,7 +3,7 @@ import { FETCHED_SETTINGS, SAVED_SETTINGS } from "./constants";
 import { Setting, SettingsReducerAction, SettingsState } from "./types";
 
 const INITIAL_STATE: SettingsState = {
-  data: [],
+  data: undefined,
 };
 
 const settingsReducer = (

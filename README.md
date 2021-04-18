@@ -36,18 +36,17 @@
 - User
   - **Connection:** Username-Password-Authentication
 
-## E2E
+## E2E/Cypress
 
-- Cypress
-  - **Auth0 Password:**
-    ```
-    e2e/cypress.env.json
+- **Auth0 Password:**
+  ```
+  e2e/cypress.env.json
 
-    {
-      "auth0Password": "password"
-    }
+  {
+    "auth0Password": "password"
+  }
 
-    ```
-  - **Ubuntu Setup:** `xhost local:root`
-  - **Headless:** `docker-compose -f docker-compose.yml -f docker-compose.override.yml -f e2e/docker-compose.e2e.yml up --abort-on-container-exit cypress`
-  - **Test Runner:** `docker-compose -f docker-compose.yml -f docker-compose.override.yml -f e2e/docker-compose.e2e.yml -f e2e/docker-compose.cypress-open.yml up --abort-on-container-exit cypress`
+  ```
+- **Ubuntu Setup:** `xhost local:root`
+- **Headless:** `docker-compose -f docker-compose.yml -f docker-compose.override.yml -f e2e/docker-compose.e2e.yml up --abort-on-container-exit cypress`
+- **Test Runner:** `docker-compose -f docker-compose.yml -f docker-compose.override.yml -f e2e/docker-compose.e2e.yml -f e2e/docker-compose.cypress-open.yml up --abort-on-container-exit cypress`

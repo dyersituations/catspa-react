@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveSettings } from "../redux/settings/actions";
 import { Setting } from "../redux/settings/types";

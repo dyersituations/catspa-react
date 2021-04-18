@@ -6,7 +6,7 @@ import {
 } from "./constants";
 
 export interface SettingsState {
-  data: Setting[];
+  data?: Setting[];
 }
 
 export interface Setting {

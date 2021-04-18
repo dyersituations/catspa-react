@@ -29,9 +29,9 @@ class Settings implements SettingsManager {
     return this.settings.find((s) => s.key === key)?.value || defaultValue;
   }
 
-  public static Instance(settings: Setting[]) {
+  public static Instance(settings?: Setting[]) {
     const instance = Settings.instance || (Settings.instance = new Settings());
-    if (settings.length) {
+    if (settings) {
       instance.settings = settings;
       instance.isLoading = false;
     }
